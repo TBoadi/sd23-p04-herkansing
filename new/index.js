@@ -1,17 +1,29 @@
 const container1 = document.querySelector('.card-container');
 console.log(container1);
 
-fetch('https://api.artic.edu/api/v1/artworks/129884')
+fetch('https://api.artic.edu/api/v1/artworks')
 .then(myData => myData.json())
-.then(jsonData => showInConsole(jsonData));
+.then(jsonData => showDataOnPage(jsonData));
 
-function showDataOnPage(jsonData, container1){
-    console.log(jsonData);
-    for (let i = 0; i < jsonData.length; i++) {
+
+function showDataOnPage(jsonData){
+    //
+    const data = jsonData.data;
+    console.log(data);
+
+    for (let i = 0; i < data.length; i++) {
         //haal een land uit de array
-        const object = jsonData[i];
+        const object = data[i];
+        console.log(object);
         //toon de naam van het land en de populatie op de pagina met behulp van innerHTML
-        container1.innerHTML += object.name + ' ' + object.population + '<br>';
+
+        let description = object.description;
+        if(description == null){
+            description = "";
+        }
+       
+        container1.innerHTML += '<b>' + object.title + '</b> <br>' + description + "<img width='100px' height='150px' src='"+ object.thumbnail.lqip+"'> <br><br>";
     }
     
 }
+
